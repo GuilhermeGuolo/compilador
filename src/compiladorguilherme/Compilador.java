@@ -17,31 +17,32 @@ import java.util.logging.Logger;
 public class Compilador {
 
     /**
-     * @param args the command line arguments
      */
-    public static void main(String[] args) {
-
-        String texto = "1 1 1 1";
-
-        //String palavra = "";
-        Stack<Character> pilha;
-        Stack<Token> pilhaToken = new Stack<>();
+    public static void rodarLexico(String texto) throws ErroLexico {
 
         try {
-            pilhaToken = new Lexico().analiseLexica(MontaPilha(texto));
-        } catch (ErroLexico ex) {
-            System.out.println(ex.getMessage());
-        }
-        //pilha = MontaPilha(texto);
+            Stack<Character> pilha;
+            Stack<Token> pilhaToken = new Stack<>();
 
-        Stack<Token> pilhaimprime = new Stack<>();
-        for (int i = pilhaToken.size() - 1; i >= 0; i--) {
-            pilhaimprime.push(pilhaToken.elementAt(i));
-        }
+            try {
+                pilhaToken = new Lexico().analiseLexica(MontaPilha(texto));
+            } catch (ErroLexico ex) {
+                System.out.println(ex.getMessage());
+            }
+            //pilha = MontaPilha(texto);
 
-        while (!pilhaimprime.isEmpty()) {
-            System.out.println(pilhaimprime.pop());
+            Stack<Token> pilhaimprime = new Stack<>();
+            for (int i = pilhaToken.size() - 1; i >= 0; i--) {
+                pilhaimprime.push(pilhaToken.elementAt(i));
+            }
 
+            while (!pilhaimprime.isEmpty()) {
+                System.out.println(pilhaimprime.pop());
+
+            }
+
+        } catch (Exception e) {
+            throw new ErroLexico("");
         }
 
     }
